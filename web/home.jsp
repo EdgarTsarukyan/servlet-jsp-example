@@ -19,14 +19,14 @@
 <body>
 <h1>User page</h1><br><br><br><br>
 
-<%User user = (User) request.getAttribute("user");%>
+<%User user = (User) request.getSession().getAttribute("user");%>
 <% if (user != null) {%>
 <p>user name is: <%=user.getName()%>
-</p><br>
+</p>
 <p>user lastname is:<%=user.getLastName()%>
-</p><br>
+</p>
 <p>user age is:<%=user.getAge()%>
-</p><br>
+</p>
 <p>user email is:<%=user.getEmail()%>
 </p>
 <%} else {%>
@@ -35,11 +35,12 @@
 
 
 <a href="login.jsp">Log out </a><br><br>
-<form action="/delete" method="get">
-   <% int id = user.getId();
-   request.getSession().setAttribute("user", user);%>
-    <input type="submit" name="delete" value="delete user page" >
+<a href="/delete?id=<%=user.getId()%>">delete</a><br>
+<form action="/formUpdate" method="post">
+    <input type="hidden" value="<%=user.getId()%>" name="id">
+    <input type="submit" value="update">
 </form>
+<%--<a href="/formUpdate?id=">update</a>--%>
 
 </body>
 </html>

@@ -10,17 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/delete")
-public class DeleteServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/formUpdate")
+public class FormUpdateServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UserManagerImpl userManager = new UserManagerImpl();
         int id = Integer.parseInt(req.getParameter("id"));
-        userManager.delete(id);
-        req.getSession().setAttribute("msg", "user page successfully deleted");
-        resp.sendRedirect("/login.jsp");
+        User user = userManager.getById(id);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/update.jsp").forward(req, resp);
+
 
     }
 }

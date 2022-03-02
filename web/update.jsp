@@ -1,4 +1,4 @@
-<%--
+<%@ page import="model.User" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 27.02.2022
@@ -21,14 +21,18 @@ request.getSession().removeAttribute("msg");%>
 <% if (msg != null && !msg.equals("")){%>
 <span style="color: red"><%=msg%></span>
 <%}%>
-<form action="/register" method="post">
-  <input type="text" placeholder="name" name="name" ><br>
-  <input type="text" placeholder="lastname"  name="lastname"><br>
-  <input type="text" placeholder="age" name="age" ><br>
-  <input type="text" placeholder="email" name="email" ><br>
-  <input type="text" placeholder="password" name="password"><br>
-  <input type="submit" value="register">
+<% User user = (User) request.getAttribute("user"); %>
+<form action="/update" method="post">
+  <input type="text" placeholder="<%=user.getName()%>" name="name" ><br>
+  <input type="text" placeholder="<%=user.getLastName()%>"  name="lastname"><br>
+  <input type="text" placeholder="<%=user.getAge()%>" name="age" ><br>
+  <input type="text" placeholder="<%=user.getEmail()%>" name="email" ><br>
+  <input type="text" placeholder="<%=user.getPassword()%>" name="password"><br>
+  <input type="hidden" value="<%=user.getId()%>" name="id">
+  <input type="submit" value="update">
 </form>
-<a href="login.jsp">Login </a><br><br>
+<%--<% User user = (User) request.getAttribute("user"); %>--%>
+<%--<a href="/update?id=<%=user.getId()%>">update</a>--%>
+
 </body>
 </html>
